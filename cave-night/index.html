@@ -1,35 +1,369 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>LMTLSS Cave Night</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LMTLSS | Cave Night Library</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      background:#0a0a0a;
+    :root{
+      --gold:#F5C518;
+      --gold-soft:#cda315;
+      --bg:#070707;
+      --bg-2:#0d0d0e;
+      --panel:#171717;
+      --panel-2:#1f1f20;
+      --panel-3:#262628;
+      --text:#ededed;
+      --muted:#9a9a9f;
+      --line:rgba(255,255,255,.06);
+      --shadow:0 18px 50px rgba(0,0,0,.35);
+      --radius:14px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    html{
+      background:
+        radial-gradient(circle at top, rgba(245,197,24,.08), transparent 28%),
+        linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
+      min-height:100%;
+    }
+
+    body{
+      color:var(--text);
+      font-family:'Barlow',sans-serif;
+      max-width:780px;
+      margin:0 auto;
+      padding:18px 14px 42px;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)),
+        linear-gradient(135deg, #121212 0%, #0c0c0c 100%);
+      border:1px solid rgba(245,197,24,.18);
+      border-radius:18px;
+      padding:34px 22px 26px;
+      box-shadow:var(--shadow);
+      text-align:center;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        repeating-linear-gradient(-45deg,
+          transparent 0px,
+          transparent 11px,
+          rgba(245,197,24,.028) 11px,
+          rgba(245,197,24,.028) 12px);
+      pointer-events:none;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:3px;
+      background:linear-gradient(90deg, transparent 0%, var(--gold) 16%, var(--gold) 84%, transparent 100%);
+      opacity:.95;
+    }
+
+    .brand{
+      position:relative;
+      z-index:1;
+      font-family:'Bebas Neue',sans-serif;
+      font-size:62px;
+      line-height:.95;
+      letter-spacing:4px;
+      color:var(--gold);
+      text-transform:uppercase;
+    }
+
+    .title{
+      position:relative;
+      z-index:1;
+      margin-top:8px;
+      font-family:'Bebas Neue',sans-serif;
+      font-size:42px;
+      line-height:.95;
+      letter-spacing:2px;
       color:#fff;
-      font-family:sans-serif;
-      padding:30px;
+      text-transform:uppercase;
     }
-    a {
-      color:#F5C518;
+
+    .subtitle{
+      position:relative;
+      z-index:1;
+      margin-top:16px;
+      font-size:16px;
+      line-height:1.5;
+      color:#d9d9dd;
+      font-weight:500;
+    }
+
+    .subnote{
+      position:relative;
+      z-index:1;
+      margin-top:8px;
+      font-size:11px;
+      line-height:1.5;
+      color:#6f6f74;
+      letter-spacing:.4px;
+      text-transform:uppercase;
+    }
+
+    .intro{
+      margin-top:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:16px 16px 14px;
+      box-shadow:var(--shadow);
+    }
+
+    .intro-label{
+      font-family:'Barlow Condensed',sans-serif;
+      text-transform:uppercase;
+      letter-spacing:3px;
+      font-size:12px;
+      color:var(--gold);
+      margin-bottom:8px;
+    }
+
+    .intro-copy{
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.6;
+    }
+
+    .section-title{
+      margin:26px 2px 14px;
+      font-family:'Barlow Condensed',sans-serif;
+      text-transform:uppercase;
+      letter-spacing:3px;
+      font-size:14px;
+      color:var(--gold);
+    }
+
+    .session-list{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .card{
+      background:linear-gradient(180deg, var(--panel-2), var(--panel));
+      border:1px solid var(--line);
+      border-left:4px solid var(--gold);
+      border-radius:14px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+
+    .card-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      padding:14px 16px 10px;
+      border-bottom:1px solid rgba(255,255,255,.04);
+      background:linear-gradient(180deg, #242426, #1f1f21);
+    }
+
+    .date{
+      font-family:'Barlow Condensed',sans-serif;
+      text-transform:uppercase;
+      letter-spacing:2px;
+      font-size:12px;
+      color:var(--gold);
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:58px;
+      padding:5px 10px;
+      border-radius:999px;
+      background:rgba(245,197,24,.12);
+      border:1px solid rgba(245,197,24,.18);
+      color:var(--gold);
+      font-size:10px;
+      font-weight:700;
+      letter-spacing:1.5px;
+      text-transform:uppercase;
+    }
+
+    .card-body{
+      padding:16px;
+    }
+
+    .theme{
+      font-size:24px;
+      line-height:1.15;
+      font-weight:700;
+      color:#fff;
+      text-wrap:balance;
+    }
+
+    .theme span{
+      color:var(--gold);
+    }
+
+    .desc{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.55;
+    }
+
+    .actions{
+      margin-top:14px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .btn{
+      display:inline-block;
       text-decoration:none;
-      font-weight:bold;
+      padding:12px 14px;
+      border-radius:10px;
+      font-weight:700;
+      font-size:14px;
+      transition:transform .15s ease, filter .15s ease;
     }
-    .item {
-      margin-bottom:25px;
-      border-bottom:1px solid #222;
-      padding-bottom:15px;
+
+    .btn:active{ transform:translateY(1px) scale(.995); }
+
+    .btn-primary{
+      background:linear-gradient(180deg, var(--gold), var(--gold-soft));
+      color:#111;
+    }
+
+    .btn-secondary{
+      background:#262628;
+      border:1px solid rgba(255,255,255,.08);
+      color:#e8e8e8;
+    }
+
+    .coming-soon{
+      opacity:.82;
+      border-left-color:#5b5b5d;
+    }
+
+    .coming-soon .date{
+      color:#b7b7bb;
+    }
+
+    .coming-soon .badge{
+      color:#b9b9bd;
+      border-color:rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+    }
+
+    .footer-line{
+      margin-top:28px;
+      text-align:center;
+      font-family:'Bebas Neue',sans-serif;
+      font-size:28px;
+      line-height:1;
+      letter-spacing:3px;
+      color:var(--gold);
+      text-transform:uppercase;
+    }
+
+    @media (max-width:560px){
+      body{ padding:14px 12px 34px; }
+      .brand{ font-size:50px; }
+      .title{ font-size:34px; }
+      .theme{ font-size:21px; }
+      .subtitle{ font-size:15px; }
+      .actions{ flex-direction:column; }
+      .btn{ width:100%; text-align:center; }
     }
   </style>
 </head>
-
 <body>
 
-<h1>Cave Night Library</h1>
+  <section class="hero">
+    <div class="brand">LMTLSS</div>
+    <div class="title">Cave Night Library</div>
+    <div class="subtitle">Tools & Talks for Modern Men</div>
+    <div class="subnote">All materials & resources © 2025 LMTLSS Manhood</div>
+  </section>
 
-<div class="item">
-  <h2>April 2026 — Flex On Them (Power)</h2>
-  <a href="./2026-04-power/">Enter →</a>
-</div>
+  <section class="intro">
+    <div class="intro-label">What You’ll Find Here</div>
+    <div class="intro-copy">
+      A growing collection of Cave Night sessions organized by date and theme. Each session opens into its own page with the handout, discussion prompts, and related links.
+    </div>
+  </section>
+
+  <div class="section-title">Sessions</div>
+
+  <section class="session-list">
+
+    <article class="card">
+      <div class="card-top">
+        <div class="date">April 2026</div>
+        <div class="badge">Latest</div>
+      </div>
+      <div class="card-body">
+        <div class="theme">Flex On Them: <span>The Purpose of Power</span></div>
+        <div class="desc">
+          A Cave Night session on power, dominion, coverage, and the difference between control and mature responsibility.
+        </div>
+        <div class="actions">
+          <a class="btn btn-primary" href="./2026-04-power/">Enter Session →</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Duplicate this block for future sessions -->
+    <!--
+    <article class="card">
+      <div class="card-top">
+        <div class="date">May 2026</div>
+        <div class="badge">New</div>
+      </div>
+      <div class="card-body">
+        <div class="theme">[Theme Title]</div>
+        <div class="desc">
+          Short one-line description of the session.
+        </div>
+        <div class="actions">
+          <a class="btn btn-primary" href="./2026-05-theme-name/">Enter Session →</a>
+        </div>
+      </div>
+    </article>
+    -->
+
+    <article class="card coming-soon">
+      <div class="card-top">
+        <div class="date">Next Session</div>
+        <div class="badge">Coming Soon</div>
+      </div>
+      <div class="card-body">
+        <div class="theme">More Cave Night sessions are on the way</div>
+        <div class="desc">
+          Keep building. New talks, handouts, and resources will be added here as the library grows.
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <div class="footer-line">Men Aren’t Born. They’re Built.</div>
 
 </body>
 </html>
