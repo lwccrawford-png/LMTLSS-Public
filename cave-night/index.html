@@ -1,369 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LMTLSS | Cave Night Library</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --gold:#F5C518;
-      --gold-soft:#cda315;
-      --bg:#070707;
-      --bg-2:#0d0d0e;
-      --panel:#171717;
-      --panel-2:#1f1f20;
-      --panel-3:#262628;
-      --text:#ededed;
-      --muted:#9a9a9f;
-      --line:rgba(255,255,255,.06);
-      --shadow:0 18px 50px rgba(0,0,0,.35);
-      --radius:14px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LMTLSS — The Purpose of Power</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    *{box-sizing:border-box;margin:0;padding:0}
+<style>
+:root{
+  --gold:#F5C518;
+  --black:#070707;
+  --panel:#171717;
+  --panel2:#1f1f20;
+  --text:#ededed;
+  --muted:#9a9a9f;
+  --discord:#5865F2;
+  --spotify:#1DB954;
+}
 
-    html{
-      background:
-        radial-gradient(circle at top, rgba(245,197,24,.08), transparent 28%),
-        linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
-      min-height:100%;
-    }
+body{
+  margin:0;
+  background:var(--black);
+  color:var(--text);
+  font-family:'Barlow',sans-serif;
+}
 
-    body{
-      color:var(--text);
-      font-family:'Barlow',sans-serif;
-      max-width:780px;
-      margin:0 auto;
-      padding:18px 14px 42px;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
-    }
+/* NAV */
+.nav{
+  display:flex;
+  gap:10px;
+  padding:14px;
+}
 
-    .hero{
-      position:relative;
-      overflow:hidden;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)),
-        linear-gradient(135deg, #121212 0%, #0c0c0c 100%);
-      border:1px solid rgba(245,197,24,.18);
-      border-radius:18px;
-      padding:34px 22px 26px;
-      box-shadow:var(--shadow);
-      text-align:center;
-    }
+.btn{
+  flex:1;
+  text-align:center;
+  padding:12px;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:700;
+}
 
-    .hero::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        repeating-linear-gradient(-45deg,
-          transparent 0px,
-          transparent 11px,
-          rgba(245,197,24,.028) 11px,
-          rgba(245,197,24,.028) 12px);
-      pointer-events:none;
-    }
+.btn-dark{
+  background:#222;
+  color:#fff;
+  border:1px solid #333;
+}
 
-    .hero::after{
-      content:"";
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:0;
-      height:3px;
-      background:linear-gradient(90deg, transparent 0%, var(--gold) 16%, var(--gold) 84%, transparent 100%);
-      opacity:.95;
-    }
+.btn-gold{
+  background:var(--gold);
+  color:#111;
+}
 
-    .brand{
-      position:relative;
-      z-index:1;
-      font-family:'Bebas Neue',sans-serif;
-      font-size:62px;
-      line-height:.95;
-      letter-spacing:4px;
-      color:var(--gold);
-      text-transform:uppercase;
-    }
+/* HERO */
+.hero{
+  text-align:center;
+  padding:30px 20px;
+  border-bottom:2px solid var(--gold);
+}
 
-    .title{
-      position:relative;
-      z-index:1;
-      margin-top:8px;
-      font-family:'Bebas Neue',sans-serif;
-      font-size:42px;
-      line-height:.95;
-      letter-spacing:2px;
-      color:#fff;
-      text-transform:uppercase;
-    }
+.hero h1{
+  font-family:'Bebas Neue';
+  font-size:42px;
+  margin:0;
+}
 
-    .subtitle{
-      position:relative;
-      z-index:1;
-      margin-top:16px;
-      font-size:16px;
-      line-height:1.5;
-      color:#d9d9dd;
-      font-weight:500;
-    }
+.hero p{
+  color:var(--muted);
+}
 
-    .subnote{
-      position:relative;
-      z-index:1;
-      margin-top:8px;
-      font-size:11px;
-      line-height:1.5;
-      color:#6f6f74;
-      letter-spacing:.4px;
-      text-transform:uppercase;
-    }
+/* SECTION */
+.section{
+  margin:16px;
+  background:var(--panel);
+  border-left:4px solid var(--gold);
+  border-radius:8px;
+}
 
-    .intro{
-      margin-top:18px;
-      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:16px 16px 14px;
-      box-shadow:var(--shadow);
-    }
+.section-header{
+  padding:10px 16px;
+  background:var(--panel2);
+  font-weight:700;
+  letter-spacing:2px;
+  color:var(--gold);
+}
 
-    .intro-label{
-      font-family:'Barlow Condensed',sans-serif;
-      text-transform:uppercase;
-      letter-spacing:3px;
-      font-size:12px;
-      color:var(--gold);
-      margin-bottom:8px;
-    }
+.section-body{
+  padding:16px;
+}
 
-    .intro-copy{
-      color:var(--muted);
-      font-size:15px;
-      line-height:1.6;
-    }
+.big{
+  font-family:'Bebas Neue';
+  font-size:24px;
+}
 
-    .section-title{
-      margin:26px 2px 14px;
-      font-family:'Barlow Condensed',sans-serif;
-      text-transform:uppercase;
-      letter-spacing:3px;
-      font-size:14px;
-      color:var(--gold);
-    }
+/* LIST */
+ul{
+  padding-left:20px;
+}
 
-    .session-list{
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-    }
+/* CTA */
+.cta{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
 
-    .card{
-      background:linear-gradient(180deg, var(--panel-2), var(--panel));
-      border:1px solid var(--line);
-      border-left:4px solid var(--gold);
-      border-radius:14px;
-      overflow:hidden;
-      box-shadow:var(--shadow);
-    }
+.discord{background:var(--discord); color:#fff;}
+.spotify{background:var(--spotify); color:#000;}
 
-    .card-top{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      padding:14px 16px 10px;
-      border-bottom:1px solid rgba(255,255,255,.04);
-      background:linear-gradient(180deg, #242426, #1f1f21);
-    }
-
-    .date{
-      font-family:'Barlow Condensed',sans-serif;
-      text-transform:uppercase;
-      letter-spacing:2px;
-      font-size:12px;
-      color:var(--gold);
-    }
-
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width:58px;
-      padding:5px 10px;
-      border-radius:999px;
-      background:rgba(245,197,24,.12);
-      border:1px solid rgba(245,197,24,.18);
-      color:var(--gold);
-      font-size:10px;
-      font-weight:700;
-      letter-spacing:1.5px;
-      text-transform:uppercase;
-    }
-
-    .card-body{
-      padding:16px;
-    }
-
-    .theme{
-      font-size:24px;
-      line-height:1.15;
-      font-weight:700;
-      color:#fff;
-      text-wrap:balance;
-    }
-
-    .theme span{
-      color:var(--gold);
-    }
-
-    .desc{
-      margin-top:8px;
-      color:var(--muted);
-      font-size:15px;
-      line-height:1.55;
-    }
-
-    .actions{
-      margin-top:14px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-
-    .btn{
-      display:inline-block;
-      text-decoration:none;
-      padding:12px 14px;
-      border-radius:10px;
-      font-weight:700;
-      font-size:14px;
-      transition:transform .15s ease, filter .15s ease;
-    }
-
-    .btn:active{ transform:translateY(1px) scale(.995); }
-
-    .btn-primary{
-      background:linear-gradient(180deg, var(--gold), var(--gold-soft));
-      color:#111;
-    }
-
-    .btn-secondary{
-      background:#262628;
-      border:1px solid rgba(255,255,255,.08);
-      color:#e8e8e8;
-    }
-
-    .coming-soon{
-      opacity:.82;
-      border-left-color:#5b5b5d;
-    }
-
-    .coming-soon .date{
-      color:#b7b7bb;
-    }
-
-    .coming-soon .badge{
-      color:#b9b9bd;
-      border-color:rgba(255,255,255,.10);
-      background:rgba(255,255,255,.04);
-    }
-
-    .footer-line{
-      margin-top:28px;
-      text-align:center;
-      font-family:'Bebas Neue',sans-serif;
-      font-size:28px;
-      line-height:1;
-      letter-spacing:3px;
-      color:var(--gold);
-      text-transform:uppercase;
-    }
-
-    @media (max-width:560px){
-      body{ padding:14px 12px 34px; }
-      .brand{ font-size:50px; }
-      .title{ font-size:34px; }
-      .theme{ font-size:21px; }
-      .subtitle{ font-size:15px; }
-      .actions{ flex-direction:column; }
-      .btn{ width:100%; text-align:center; }
-    }
-  </style>
+.footer{
+  text-align:center;
+  margin:30px 0;
+  font-family:'Bebas Neue';
+  color:var(--gold);
+}
+</style>
 </head>
+
 <body>
 
-  <section class="hero">
-    <div class="brand">LMTLSS</div>
-    <div class="title">Cave Night Library</div>
-    <div class="subtitle">Tools & Talks for Modern Men</div>
-    <div class="subnote">All materials & resources © 2025 LMTLSS Manhood</div>
-  </section>
+<!-- TOP NAV -->
+<div class="nav">
+  <a href="../" class="btn btn-dark">← Back to Library</a>
+  <a href="https://www.wearelmtlss.com" target="_blank" class="btn btn-gold">Visit LMTLSS</a>
+</div>
 
-  <section class="intro">
-    <div class="intro-label">What You’ll Find Here</div>
-    <div class="intro-copy">
-      A growing collection of Cave Night sessions organized by date and theme. Each session opens into its own page with the handout, discussion prompts, and related links.
+<!-- HERO -->
+<div class="hero">
+  <h1>The Purpose of Power</h1>
+  <p>Cave Night — April 2026</p>
+</div>
+
+<!-- CORE -->
+<div class="section">
+  <div class="section-header">LOCK THIS IN</div>
+  <div class="section-body">
+    <div class="big">
+      Power is not given to elevate you — it's given so you can elevate something else.
     </div>
-  </section>
+  </div>
+</div>
 
-  <div class="section-title">Sessions</div>
+<!-- DISCUSSION -->
+<div class="section">
+  <div class="section-header">DISCUSSION</div>
+  <div class="section-body">
+    <ul>
+      <li>What shaped your pursuit or abandonment of power?</li>
+      <li>How is that showing up right now?</li>
+      <li>What would stepping into dominion look like this week?</li>
+    </ul>
+  </div>
+</div>
 
-  <section class="session-list">
+<!-- CTA -->
+<div class="section">
+  <div class="section-header">CONTINUE</div>
+  <div class="section-body cta">
+    <a href="https://discord.gg/WWR8DhjKH" target="_blank" class="btn discord">
+      Join the Brotherhood
+    </a>
+    <a href="https://open.spotify.com/episode/00JbqAVERzLG1orvfo9aAh" target="_blank" class="btn spotify">
+      Listen on Spotify
+    </a>
+  </div>
+</div>
 
-    <article class="card">
-      <div class="card-top">
-        <div class="date">April 2026</div>
-        <div class="badge">Latest</div>
-      </div>
-      <div class="card-body">
-        <div class="theme">Flex On Them: <span>The Purpose of Power</span></div>
-        <div class="desc">
-          A Cave Night session on power, dominion, coverage, and the difference between control and mature responsibility.
-        </div>
-        <div class="actions">
-          <a class="btn btn-primary" href="./2026-04-power/">Enter Session →</a>
-        </div>
-      </div>
-    </article>
+<!-- BOTTOM NAV -->
+<div class="nav">
+  <a href="../" class="btn btn-dark">← Back to Library</a>
+  <a href="https://www.wearelmtlss.com" target="_blank" class="btn btn-gold">Visit LMTLSS</a>
+</div>
 
-    <!-- Duplicate this block for future sessions -->
-    <!--
-    <article class="card">
-      <div class="card-top">
-        <div class="date">May 2026</div>
-        <div class="badge">New</div>
-      </div>
-      <div class="card-body">
-        <div class="theme">[Theme Title]</div>
-        <div class="desc">
-          Short one-line description of the session.
-        </div>
-        <div class="actions">
-          <a class="btn btn-primary" href="./2026-05-theme-name/">Enter Session →</a>
-        </div>
-      </div>
-    </article>
-    -->
-
-    <article class="card coming-soon">
-      <div class="card-top">
-        <div class="date">Next Session</div>
-        <div class="badge">Coming Soon</div>
-      </div>
-      <div class="card-body">
-        <div class="theme">More Cave Night sessions are on the way</div>
-        <div class="desc">
-          Keep building. New talks, handouts, and resources will be added here as the library grows.
-        </div>
-      </div>
-    </article>
-
-  </section>
-
-  <div class="footer-line">Men Aren’t Born. They’re Built.</div>
+<div class="footer">
+  MEN AREN’T BORN. THEY’RE BUILT.
+</div>
 
 </body>
 </html>
