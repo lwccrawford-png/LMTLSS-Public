@@ -4,210 +4,615 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LMTLSS — The Purpose of Power</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
   <style>
-    :root{
-      --gold:#F5C518;
-      --gold-soft:#c99f14;
-      --black:#070707;
-      --dark:#0f0f10;
-      --panel:#171717;
-      --panel-2:#1f1f20;
-      --panel-3:#262628;
-      --text:#ededed;
-      --muted:#9a9a9f;
-      --red:#e55345;
-      --green:#2ecc71;
-      --discord:#5865F2;
-      --spotify:#1DB954;
-      --shadow:0 18px 50px rgba(0,0,0,.35);
-      --radius:10px;
+    :root {
+      --gold: #F5C518;
+      --black: #0a0a0a;
+      --dark: #111111;
+      --mid: #1a1a1a;
+      --light-mid: #222222;
+      --text: #e8e8e8;
+      --muted: #888888;
+      --red: #e74c3c;
+      --green: #2ecc71;
     }
 
-    *{box-sizing:border-box;margin:0;padding:0}
-
-    html{
-      background:
-        radial-gradient(circle at top, rgba(245,197,24,.08), transparent 28%),
-        linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
-      min-height:100%;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    body{
-      color:var(--text);
-      font-family:'Barlow',sans-serif;
-      max-width:520px;
-      margin:0 auto;
-      padding:0 0 40px;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
+    html, body {
+      background-color: var(--black);
+    }
+
+    body {
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 0 40px 0;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
     /* NAV */
-    .nav{
-      display:flex;
-      gap:10px;
-      padding:14px;
+    .nav {
+      display: flex;
+      gap: 10px;
+      padding: 14px 16px 0;
     }
 
-    .nav a{
-      flex:1;
-      text-align:center;
-      padding:12px;
-      border-radius:8px;
-      text-decoration:none;
-      font-weight:700;
+    .nav a {
+      flex: 1;
+      text-align: center;
+      padding: 12px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1.2;
     }
 
-    .nav-back{
-      background:#222;
-      color:#fff;
-      border:1px solid #333;
+    .nav-back {
+      background: #222;
+      color: #fff;
+      border: 1px solid #333;
     }
 
-    .nav-main{
-      background:var(--gold);
-      color:#111;
+    .nav-main {
+      background: var(--gold);
+      color: #111;
+      border: 1px solid rgba(0,0,0,0.15);
     }
 
-    .shell{
-      padding:18px 14px 36px;
+    /* HEADER */
+    .header {
+      background: var(--dark);
+      border-bottom: 3px solid var(--gold);
+      padding: 28px 24px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin-top: 14px;
     }
 
-    .hero{
-      position:relative;
-      overflow:hidden;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)),
-        linear-gradient(135deg, #121212 0%, #0c0c0c 100%);
-      border:1px solid rgba(245,197,24,.18);
-      border-radius:16px;
-      padding:30px 22px 24px;
-      box-shadow:var(--shadow);
+    .header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 8px,
+        rgba(245, 197, 24, 0.03) 8px,
+        rgba(245, 197, 24, 0.03) 9px
+      );
+      pointer-events: none;
     }
 
-    .logo-badge{
-      text-align:center;
-      font-family:'Bebas Neue';
-      font-size:28px;
-      letter-spacing:4px;
+    .logo-wrap {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 180px;
+      height: 64px;
+      margin: 0 auto;
+      border: 1px solid rgba(245,197,24,0.18);
+      background: rgba(255,255,255,0.02);
+      border-radius: 4px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 4px;
+      color: white;
     }
 
-    .title{
-      text-align:center;
-      font-family:'Bebas Neue';
-      font-size:42px;
-      margin-top:8px;
+    .talk-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--gold);
+      margin-top: 14px;
+      position: relative;
+      z-index: 1;
+      text-transform: uppercase;
     }
 
-    .stack{
-      margin-top:16px;
-      display:flex;
-      flex-direction:column;
-      gap:16px;
+    .talk-subtitle {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      letter-spacing: 2px;
+      color: white;
+      line-height: 1;
+      margin-top: 4px;
+      position: relative;
+      z-index: 1;
+      text-transform: uppercase;
     }
 
-    .section{
-      background:var(--panel);
-      border-left:4px solid var(--gold);
-      border-radius:10px;
-      overflow:hidden;
+    /* SECTIONS */
+    .section {
+      margin: 20px 16px 0;
+      background: var(--mid);
+      border-radius: 4px;
+      overflow: hidden;
+      border-left: 3px solid var(--gold);
+      animation: fadeUp 0.5s ease both;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.03) inset;
     }
 
-    .section-header{
-      background:var(--panel-2);
-      padding:12px;
-      color:var(--gold);
-      font-weight:700;
+    .section:nth-of-type(1) { animation-delay: 0.05s; }
+    .section:nth-of-type(2) { animation-delay: 0.10s; }
+    .section:nth-of-type(3) { animation-delay: 0.15s; }
+    .section:nth-of-type(4) { animation-delay: 0.20s; }
+    .section:nth-of-type(5) { animation-delay: 0.25s; }
+    .section:nth-of-type(6) { animation-delay: 0.30s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .section-body{
-      padding:16px;
+    .section-header {
+      background: var(--light-mid);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
     }
 
-    .cta{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
+    .section-icon {
+      font-size: 16px;
+      flex-shrink: 0;
     }
 
-    .btn{
-      padding:14px;
-      text-align:center;
-      border-radius:8px;
-      text-decoration:none;
-      font-weight:700;
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
     }
 
-    .discord{background:var(--discord);color:#fff;}
-    .spotify{background:var(--spotify);color:#000;}
+    .section-body {
+      padding: 16px;
+    }
 
-    .footer{
-      text-align:center;
-      margin:30px 0;
-      font-family:'Bebas Neue';
-      color:var(--gold);
+    /* BIG QUOTE */
+    .big-quote {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      line-height: 1.2;
+      color: white;
+      letter-spacing: 1px;
+    }
+
+    .big-quote span {
+      color: var(--gold);
+    }
+
+    /* POINTS LIST */
+    .points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .points li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 15px;
+      line-height: 1.45;
+      color: var(--text);
+    }
+
+    .bullet {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 1.2;
+      flex-shrink: 0;
+    }
+
+    /* CONTRAST ROWS */
+    .contrast-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .contrast-card {
+      background: var(--light-mid);
+      border-radius: 3px;
+      padding: 12px;
+      text-align: center;
+      min-height: 86px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .contrast-card.bad {
+      border-top: 2px solid #c0392b;
+    }
+
+    .contrast-card.good {
+      border-top: 2px solid #27ae60;
+    }
+
+    .contrast-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .bad .contrast-label { color: var(--red); }
+    .good .contrast-label { color: var(--green); }
+
+    .contrast-text {
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--text);
+    }
+
+    /* DEFINITION BOX */
+    .definition {
+      background: var(--light-mid);
+      border-radius: 3px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .def-term {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .def-text {
+      font-size: 14px;
+      line-height: 1.5;
+      font-style: italic;
+      color: #cccccc;
+    }
+
+    /* PURSUITS */
+    .pursuit {
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .pursuit:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .pursuit-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 3px;
+    }
+
+    .pursuit-desc {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .pursuit-result {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--red);
+    }
+
+    /* ADAM FRAMEWORK */
+    .framework-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .fw-card {
+      background: var(--light-mid);
+      border-radius: 3px;
+      padding: 12px 10px;
+      text-align: center;
+    }
+
+    .fw-verb {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      color: var(--gold);
+      display: block;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .fw-meaning {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+
+    /* LINCOLN QUOTE */
+    .lincoln {
+      background: var(--light-mid);
+      border-radius: 3px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .lincoln-quote {
+      font-size: 14px;
+      font-style: italic;
+      line-height: 1.5;
+      color: #cccccc;
+      margin-bottom: 6px;
+    }
+
+    .lincoln-attr {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* FOOTER */
+    .footer {
+      margin: 28px 16px 0;
+      text-align: center;
+      padding: 16px;
+      background: var(--mid);
+      border-radius: 4px;
+      border: 1px solid rgba(245,197,24,0.2);
+    }
+
+    .footer-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .footer-tagline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-top: 4px;
+      text-transform: uppercase;
+    }
+
+    .helper-note {
+      margin: 18px 16px 0;
+      padding: 12px 14px;
+      background: rgba(245,197,24,0.06);
+      border: 1px solid rgba(245,197,24,0.16);
+      border-radius: 4px;
+      color: #d7d7d7;
+      font-size: 12px;
+      line-height: 1.5;
     }
   </style>
 </head>
-
 <body>
 
-<!-- TOP NAV -->
-<div class="nav">
-  <a href="../" class="nav-back">← Back to Library</a>
-  <a href="https://www.wearelmtlss.com" target="_blank" class="nav-main">Visit LMTLSS</a>
-</div>
-
-<div class="shell">
-
-  <div class="hero">
-    <div class="logo-badge">LMTLSS</div>
-    <div class="title">The Purpose of Power</div>
+  <!-- TOP NAV -->
+  <div class="nav">
+    <a href="../" class="nav-back">← Back to Library</a>
+    <a href="https://www.wearelmtlss.com" target="_blank" rel="noopener noreferrer" class="nav-main">Visit LMTLSS</a>
   </div>
 
-  <div class="stack">
-
-    <!-- KEEP YOUR ORIGINAL CONTENT BELOW -->
-
-    <div class="section">
-      <div class="section-header">Lock This In</div>
-      <div class="section-body">
-        Power is not given to elevate you — it's given so you can elevate something else.
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-header">Discussion</div>
-      <div class="section-body">
-        <ul>
-          <li>What shaped your pursuit of power?</li>
-          <li>How is that showing up right now?</li>
-          <li>What does dominion look like this week?</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-header">Continue</div>
-      <div class="section-body cta">
-        <a href="https://discord.gg/WWR8DhjKH" class="btn discord">Join the Brotherhood</a>
-        <a href="https://open.spotify.com/episode/00JbqAVERzLG1orvfo9aAh" class="btn spotify">Listen on Spotify</a>
-      </div>
-    </div>
-
+  <div class="header">
+    <div class="logo-wrap">LMTLSS</div>
+    <div class="talk-title">Cave Night &nbsp;·&nbsp; This Month's Talk</div>
+    <div class="talk-subtitle">The Purpose of Power</div>
   </div>
-</div>
 
-<!-- BOTTOM NAV -->
-<div class="nav">
-  <a href="../" class="nav-back">← Back to Library</a>
-  <a href="https://www.wearelmtlss.com" target="_blank" class="nav-main">Visit LMTLSS</a>
-</div>
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">✍️</span>
+      <span class="section-label">Lock This In</span>
+    </div>
+    <div class="section-body">
+      <div class="big-quote">
+        “Power is not given to <span>elevate you</span> — it’s given so you can <span>elevate something else.</span>”
+      </div>
+      <div style="margin-top: 12px; font-size: 14px; color: var(--muted); line-height: 1.5;">
+        Real power is not measured by how high you rise — it’s measured by <strong style="color: var(--text);">what rises around you.</strong>
+      </div>
+    </div>
+  </div>
 
-<div class="footer">
-  MEN AREN’T BORN. THEY’RE BUILT.
-</div>
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🧱</span>
+      <span class="section-label">Dominion Defined</span>
+    </div>
+    <div class="section-body">
+      <div class="definition">
+        <div class="def-term">Dominion</div>
+        <div class="def-text">Not domination. Not control. Dominion is not taking control — it’s taking <strong style="color: white;">responsibility.</strong></div>
+      </div>
+      <ul class="points">
+        <li><span class="bullet">→</span><span>Dominion is the execution of <strong>legitimate, God-honoring power.</strong></span></li>
+        <li><span class="bullet">→</span><span>Gaining power by any other means <strong style="color:#e74c3c;">is destructive.</strong></span></li>
+        <li><span class="bullet">→</span><span>If it’s not building, protecting, or growing — it’s not dominion.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">⚠️</span>
+      <span class="section-label">3 Wrong Pursuits of Power</span>
+    </div>
+    <div class="section-body">
+      <div class="pursuit">
+        <div class="pursuit-title">Validation</div>
+        <div class="pursuit-desc">Chasing attention, recognition, being seen.</div>
+        <div class="pursuit-result">→ Power used for validation will empty you.</div>
+      </div>
+      <div class="pursuit">
+        <div class="pursuit-title">Pain</div>
+        <div class="pursuit-desc">Climbing, winning, proving — driven by past hurt.</div>
+        <div class="pursuit-result">→ Power driven by pain will harden you.</div>
+      </div>
+      <div class="pursuit">
+        <div class="pursuit-title">Pride</div>
+        <div class="pursuit-desc">More status, more control, more recognition.</div>
+        <div class="pursuit-result">→ Power fueled by pride will isolate you.</div>
+      </div>
+      <div style="margin-top: 14px; padding: 12px; background: rgba(245,197,24,0.07); border-radius: 3px;">
+        <div style="font-size: 14px; line-height: 1.5;"><strong style="color: var(--gold);">Bottom line:</strong> Power is not the problem. <strong>Misdirected power</strong> is the problem.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">⚔️</span>
+      <span class="section-label">Dominion Framework — Adam</span>
+    </div>
+    <div class="section-body">
+      <div style="font-size: 13px; color: var(--muted); margin-bottom: 12px;">God gave Adam unlimited power — with a specific purpose:</div>
+      <div class="framework-grid">
+        <div class="fw-card">
+          <span class="fw-verb">Work It</span>
+          <div class="fw-meaning">Build it</div>
+        </div>
+        <div class="fw-card">
+          <span class="fw-verb">Keep It</span>
+          <div class="fw-meaning">Protect it</div>
+        </div>
+        <div class="fw-card">
+          <span class="fw-verb">Multiply It</span>
+          <div class="fw-meaning">Grow it</div>
+        </div>
+        <div class="fw-card">
+          <span class="fw-verb">Subdue It</span>
+          <div class="fw-meaning">Stand against opposition</div>
+        </div>
+      </div>
+      <div style="margin-top: 12px; font-size: 14px; text-align:center; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing:1px; color: var(--gold);">
+        That’s Dominion. Not control — Responsibility.
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🔥</span>
+      <span class="section-label">Power Reveals</span>
+    </div>
+    <div class="section-body">
+      <div class="lincoln">
+        <div class="lincoln-quote">“Nearly all men can stand adversity, but if you want to test a man’s character, give him power.”</div>
+        <div class="lincoln-attr">— Abraham Lincoln</div>
+      </div>
+      <ul class="points">
+        <li><span class="bullet">→</span><span>Power doesn’t <em>change</em> you. It <strong>reveals</strong> you.</span></li>
+        <li><span class="bullet">→</span><span>It exposes what was already there.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🛡️</span>
+      <span class="section-label">Coverage, Not Control</span>
+    </div>
+    <div class="section-body">
+      <div class="contrast-grid">
+        <div class="contrast-card bad">
+          <div class="contrast-label">Immature Men</div>
+          <div class="contrast-text">Control</div>
+        </div>
+        <div class="contrast-card good">
+          <div class="contrast-label">Mature Men</div>
+          <div class="contrast-text">Cover</div>
+        </div>
+        <div class="contrast-card bad">
+          <div class="contrast-label">Power Abused</div>
+          <div class="contrast-text">Destroys</div>
+        </div>
+        <div class="contrast-card bad">
+          <div class="contrast-label">Power Avoided</div>
+          <div class="contrast-text">Abandons</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">💬</span>
+      <span class="section-label">Discussion</span>
+    </div>
+    <div class="section-body">
+      <ul class="points">
+        <li><span class="bullet">1</span><span>What most shaped your pursuit or abandonment of power—fear, validation, pain, or pride? Something else?</span></li>
+        <li><span class="bullet">2</span><span>How is that showing up in your life right now?</span></li>
+        <li><span class="bullet">3</span><span>What would it look like to begin the shift to dominion this week?</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-text">LMTLSS Cave Night</div>
+    <div class="footer-tagline">Men Aren’t Born. They’re Built.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🎧</span>
+      <span class="section-label">Continue the Conversation</span>
+    </div>
+    <div class="section-body" style="text-align:center;">
+      <a href="https://discord.gg/WWR8DhjKH"
+         target="_blank"
+         rel="noopener noreferrer"
+         style="display:inline-block; margin-top:12px; padding:12px 18px; background:#5865F2; color:#fff; font-weight:700; border-radius:4px; text-decoration:none;">
+        Join the Brotherhood (Discord)
+      </a>
+      <a href="https://open.spotify.com/episode/00JbqAVERzLG1orvfo9aAh?si=UDFxHRvoRP6DKfSHyd9uag&t=0&pi=nqVd9VnVS5KB8"
+         target="_blank"
+         rel="noopener noreferrer"
+         style="display:inline-block; margin-top:12px; padding:12px 18px; background:#1DB954; color:#000; font-weight:700; border-radius:4px; text-decoration:none;">
+        Listen on Spotify
+      </a>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="nav">
+    <a href="../" class="nav-back">← Back to Library</a>
+    <a href="https://www.wearelmtlss.com" target="_blank" rel="noopener noreferrer" class="nav-main">Visit LMTLSS</a>
+  </div>
 
 </body>
 </html>
