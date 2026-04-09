@@ -1,1 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LMTLSS — The Purpose of Power</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --gold:#F5C518;
+      --gold-soft:#c99f14;
+      --black:#070707;
+      --dark:#0f0f10;
+      --panel:#171717;
+      --panel-2:#1f1f20;
+      --panel-3:#262628;
+      --text:#ededed;
+      --muted:#9a9a9f;
+      --red:#e55345;
+      --green:#2ecc71;
+      --discord:#5865F2;
+      --spotify:#1DB954;
+      --shadow:0 18px 50px rgba(0,0,0,.35);
+      --radius:10px;
+    }
 
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    html{
+      background:
+        radial-gradient(circle at top, rgba(245,197,24,.08), transparent 28%),
+        linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
+      min-height:100%;
+    }
+
+    body{
+      color:var(--text);
+      font-family:'Barlow',sans-serif;
+      max-width:520px;
+      margin:0 auto;
+      padding:0 0 40px;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    .shell{
+      padding:18px 14px 36px;
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)),
+        linear-gradient(135deg, #121212 0%, #0c0c0c 100%);
+      border:1px solid rgba(245,197,24,.18);
+      border-radius:16px;
+      padding:30px 22px 24px;
+      box-shadow:var(--shadow);
+    }
+
+    .hero:before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        repeating-linear-gradient(-45deg,
+          transparent 0px,
+          transparent 11px,
+          rgba(245,197,24,.028) 11px,
+          rgba(245,197,24,.028) 12px);
+      pointer-events:none;
+    }
+
+    .hero:after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:3px;
+      background:linear-gradient(90deg, transparent 0%, var(--gold) 16%, var(--gold) 84%, transparent 100%);
+      opacity:.95;
+    }
+
+    .logo-badge{
+      position:relative;
+      z-index:1;
+      width:max-content;
+      margin:0 auto;
+      padding:10px 16px 8px;
+      border:1px solid rgba(245,197,24,.22);
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      font-family:'Bebas Neue',sans-serif;
+      letter-spacing:4px;
+      font-size:28px;
+      line-height:1;
+      color:#fff;
+    }
+
+    .kicker{
+      position:relative;
+      z-index:1;
+      margin-top:18px;
+      text-align:center;
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:12px;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:4px;
+      color:var(--gold);
+    }
+
+    .title{
+      position:relative;
+      z-index:1;
+      margin-top:8px;
+      text-align:center;
+      font-family:'Bebas Neue',sans-serif;
+      font-size:42px;
+      line-height:.96;
+      letter-spacing:1.5px;
+      text-transform:uppercase;
+      color:#fff;
+      text-wrap:balance;
+    }
+
+    .subhead{
+      position:relative;
+      z-index:1;
+      margin-top:16px;
+      text-align:center;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.55;
+      max-width:420px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+
+    .stack{
+      margin-top:16px;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    .section{
+      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+      border:1px solid rgba(255,255,255,.05);
+      border-left:4px solid var(--gold);
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+
+    .section-header{
+      background:linear-gradient(180deg, var(--panel-3), var(--panel-2));
+      border-bottom:1px solid rgba(255,255,255,.05);
+      padding:14px 16px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .icon{
+      width:30px;
+      height:30px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,.04);
+      font-size:16px;
+      flex:0 0 auto;
+    }
+
+    .label{
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:4px;
+      text-transform:uppercase;
+      color:var(--gold);
+    }
+
+    .section-body{
+      padding:18px 16px;
+      background:linear-gradient(180deg, var(--panel), #131314);
+    }
+
+    .big-quote{
+      font-family:'Bebas Neue',sans-serif;
+      font-size:31px;
+      line-height:1.03;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      color:#fff;
+    }
+
+    .big-quote .gold{ color:var(--gold); }
+    .lead{
+      margin-top:14px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.6;
+    }
+    .lead strong{ color:var(--text); }
+
+    .definition{
+      background:linear-gradient(180deg, #242426, #1f1f21);
+      border:1px solid rgba(245,197,24,.10);
+      border-radius:8px;
+      padding:14px 14px 12px;
+      margin-bottom:14px;
+    }
+
+    .def-term{
+      font-family:'Bebas Neue',sans-serif;
+      letter-spacing:2px;
+      font-size:24px;
+      color:var(--gold);
+      text-transform:uppercase;
+    }
+
+    .def-text{
+      margin-top:6px;
+      font-size:15px;
+      line-height:1.55;
+      color:#d2d2d5;
+    }
+
+    .points{
+      list-style:none;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .points li{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      font-size:15px;
+      line-height:1.55;
+      color:var(--text);
+    }
+
+    .bullet{
+      flex:0 0 auto;
+      color:var(--gold);
+      font-size:18px;
+      font-weight:700;
+      line-height:1.2;
+      width:18px;
+      text-align:center;
+      margin-top:1px;
+    }
+
+    .pursuit{
+      padding:0 0 14px;
+      margin:0 0 14px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .pursuit:last-child{
+      border-bottom:none;
+      margin-bottom:0;
+      padding-bottom:0;
+    }
+
+    .pursuit-title{
+      font-family:'Barlow Condensed',sans-serif;
+      text-transform:uppercase;
+      letter-spacing:1.2px;
+      font-size:19px;
+      font-weight:700;
+      color:var(--gold);
+    }
+
+    .pursuit-desc{
+      margin-top:4px;
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.45;
+    }
+
+    .pursuit-result{
+      margin-top:7px;
+      font-size:14px;
+      font-weight:700;
+      color:var(--red);
+    }
+
+    .callout{
+      margin-top:14px;
+      padding:14px;
+      border-radius:8px;
+      background:rgba(245,197,24,.07);
+      border:1px solid rgba(245,197,24,.14);
+      font-size:14px;
+      line-height:1.55;
+      color:#ddd;
+    }
+    .callout strong{ color:var(--gold); }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .fw-card, .contrast-card{
+      background:linear-gradient(180deg, #262628, #1d1d1f);
+      border-radius:8px;
+      padding:14px 12px;
+      text-align:center;
+      border:1px solid rgba(255,255,255,.04);
+      min-height:88px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .fw-verb{
+      font-family:'Bebas Neue',sans-serif;
+      font-size:26px;
+      line-height:1;
+      letter-spacing:1.4px;
+      color:var(--gold);
+      text-transform:uppercase;
+    }
+
+    .fw-meaning{
+      margin-top:6px;
+      font-size:12px;
+      color:var(--muted);
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+    }
+
+    .mini-intro{
+      margin-bottom:14px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.55;
+    }
+
+    .center-statement{
+      margin-top:14px;
+      text-align:center;
+      font-family:'Barlow Condensed',sans-serif;
+      font-size:17px;
+      letter-spacing:1px;
+      color:var(--gold);
+      font-weight:700;
+      text-transform:uppercase;
+    }
+
+    .quote-box{
+      background:linear-gradient(180deg, #242426, #1f1f21);
+      border-radius:8px;
+      padding:16px 14px;
+      border:1px solid rgba(255,255,255,.05);
+      margin-bottom:14px;
+    }
+
+    .quote-text{
+      font-size:15px;
+      line-height:1.6;
+      color:#d5d5d8;
+      font-style:italic;
+    }
+
+    .quote-attr{
+      margin-top:8px;
+      font-family:'Barlow Condensed',sans-serif;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      font-size:11px;
+      color:var(--gold);
+    }
+
+    .contrast-card.bad{ border-top:3px solid var(--red); }
+    .contrast-card.good{ border-top:3px solid var(--green); }
+
+    .contrast-label{
+      font-family:'Barlow Condensed',sans-serif;
+      letter-spacing:3px;
+      font-size:11px;
+      text-transform:uppercase;
+      font-weight:700;
+      margin-bottom:8px;
+    }
+
+    .contrast-card.bad .contrast-label{ color:var(--red); }
+    .contrast-card.good .contrast-label{ color:var(--green); }
+
+    .contrast-text{
+      color:var(--text);
+      font-size:15px;
+      line-height:1.4;
+      font-weight:600;
+    }
+
+    .discussion-list{
+      list-style:none;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
+
+    .discussion-item{
+      display:grid;
+      grid-template-columns:28px 1fr;
+      gap:12px;
+      align-items:start;
+    }
+
+    .num{
+      color:var(--gold);
+      font-family:'Bebas Neue',sans-serif;
+      font-size:28px;
+      line-height:1;
+    }
+
+    .q{
+      font-size:17px;
+      line-height:1.5;
+      color:var(--text);
+      font-weight:500;
+    }
+
+    .tagline-band{
+      margin-top:2px;
+      text-align:center;
+      font-family:'Bebas Neue',sans-serif;
+      font-size:26px;
+      letter-spacing:3px;
+      line-height:1.08;
+      color:var(--gold);
+      text-transform:uppercase;
+      padding:8px 10px 2px;
+      text-wrap:balance;
+    }
+
+    .cta-wrap{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .btn{
+      display:block;
+      width:100%;
+      text-align:center;
+      text-decoration:none;
+      padding:16px 14px;
+      border-radius:10px;
+      font-weight:800;
+      font-size:16px;
+      letter-spacing:.2px;
+      transition:transform .15s ease, filter .15s ease;
+      box-shadow:0 12px 28px rgba(0,0,0,.24);
+    }
+
+    .btn:active{ transform:translateY(1px) scale(.995); }
+
+    .btn.discord{
+      background:linear-gradient(180deg, #6673ff, var(--discord));
+      color:#fff;
+    }
+
+    .btn.spotify{
+      background:linear-gradient(180deg, #27d861, var(--spotify));
+      color:#051306;
+    }
+
+    .cta-note{
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
+      padding-top:2px;
+    }
+
+    @media (max-width:400px){
+      .title{ font-size:36px; }
+      .big-quote{ font-size:28px; }
+      .q{ font-size:16px; }
+      .grid-2{ gap:8px; }
+      .fw-card,.contrast-card{ min-height:84px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="hero">
+      <div class="logo-badge">LMTLSS</div>
+      <div class="kicker">Cave Night · This Month's Talk</div>
+      <div class="title">The Purpose of Power</div>
+      <div class="subhead">Power was never meant to make a man bigger. It was meant to make his stewardship stronger.</div>
+    </div>
+
+    <div class="stack">
+      <section class="section">
+        <div class="section-header">
+          <div class="icon">✍️</div>
+          <div class="label">Lock This In</div>
+        </div>
+        <div class="section-body">
+          <div class="big-quote">Power is not given to <span class="gold">elevate you</span> — it’s given so you can <span class="gold">elevate something else.</span></div>
+          <div class="lead">Real power is not measured by how high you rise — it’s measured by <strong>what rises around you.</strong></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <div class="icon">🧱</div>
+          <div class="label">Dominion Defined</div>
+        </div>
+        <div class="section-body">
+          <div class="definition">
+            <div class="def-term">Dominion</div>
+            <div class="def-text">Not domination. Not control. Dominion is not taking control — it’s taking <strong style="color:#fff;">responsibility.</strong></div>
+          </div>
+          <ul class="points">
+            <li><span class="bullet">→</span><span>Dominion is the responsible output of power for impact.</span></li>
+            <li><span class="bullet">→</span><span>Gaining power by any other means is <strong style="color:var(--red);">destructive.</strong></span></li>
+            <li><span class="bullet">→</span><span>If it’s not building, protecting, or growing — it’s not dominion.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <div class="icon">⚠️</div>
+          <div class="label">3 Wrong Pursuits of Power</div>
+        </div>
+        <div class="section-body">
+          <div class="pursuit">
+            <div class="pursuit-title">Validation</div>
+            <div class="pursuit-desc">Chasing attention, recognition, and the need to be seen.</div>
+            <div class="pursuit-result">→ Power used for validation will empty you.</div>
+          </div>
+
+          <div class="pursuit">
+            <div class="pursuit-title">Pain</div>
+            <div class="pursuit-desc">Climbing, winning, and proving — driven by old wounds.</div>
+            <div class="pursuit-result">→ Power driven by pain will harden you.</div>
+          </div>
+
+          <div class="pursuit">
+            <div class="pursuit-title">Pride</div>
+            <div class="pursuit-desc">More status. More control. More recognition. More self.</div>
+            <div class="pursuit-result">→ Power fueled by pride will isolate you.</div>
+          </div>
+
+          <div class="callout"><strong>Bottom line:</strong> Power is not the problem. <strong style="color:#fff;">Misdirected power</strong> is the problem.</div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <div class="icon">⚔️</div>
+          <div class="label">Dominion Framework — Adam</div>
+        </div>
+        <div class="section-body">
+          <div class="mini-intro">God gave Adam power with a purpose. Not to posture — to steward.</div>
+          <div class="grid-2">
+            <div class="fw-card">
+              <div class="fw-verb">Work It</div>
+              <div class="fw-meaning">Build It</div>
+            </div>
+            <div class="fw-card">
+              <div class="fw-verb">Keep It</div>
+              <div class="fw-meaning">Protect It</div>
+            </div>
+            <div class="fw-card">
+              <div class="fw-verb">Multiply It</div>
+              <div class="fw-meaning">Grow It</div>
+            </div>
+            <div class="fw-card">
+              <div class="fw-verb">Subdue It</div>
+              <div class="fw-meaning">Stand Against Opposition</div>
+            </div>
+          </div>
+          <div class="center-statement">That’s Dominion. Not control — responsibility.</div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <div class="icon">🔥</div>
+          <div class="label">Power Reveals</div>
+        </div>
+        <div class="section-body">
+          <div class="quote-box">
+            <div class="quote-text">“Nearly all men can stand adversity, but if you want to test a man’s character, give him power.”</div>
+            <div class="quote-attr">— Abraham Lincoln</div>
+          </div>
+          <ul class="points">
+            <li><span class="bullet">→</span><span>Power doesn’t change you. It <strong>reveals</strong> you.</span></li>
+            <li><span class="bullet">→</span><span>It exposes what was already there.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <div class="icon">🛡️</div>
+          <div class="label">Coverage, Not Control</div>
+        </div>
+        <div class="section-body">
+          <div class="grid-2">
+            <div class="contrast-card bad">
+              <div class="contrast-label">Immature Men</div>
+              <div class="contrast-text">Control</div>
+            </div>
+            <div class="contrast-card good">
+              <div class="contrast-label">Mature Men</div>
+              <div class="contrast-text">Cover</div>
+            </div>
+            <div class="contrast-card bad">
+              <div class="contrast-label">Power Abused</div>
+              <div class="contrast-text">Destroys</div>
+            </div>
+            <div class="contrast-card bad">
+              <div class="contrast-label">Power Avoided</div>
+              <div class="contrast-text">Abandons</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <div class="icon">💬</div>
+          <div class="label">Discussion</div>
+        </div>
+        <div class="section-body">
+          <div class="discussion-list">
+            <div class="discussion-item">
+              <div class="num">1</div>
+              <div class="q">What most shaped your pursuit or abandonment of power—fear, validation, pain, or pride? Something else?</div>
+            </div>
+            <div class="discussion-item">
+              <div class="num">2</div>
+              <div class="q">How is that showing up in your life right now?</div>
+            </div>
+            <div class="discussion-item">
+              <div class="num">3</div>
+              <div class="q">What would it look like to begin the shift to dominion this week?</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="tagline-band">Men aren’t born. They’re built.</div>
+
+      <section class="section">
+        <div class="section-header">
+          <div class="icon">🎧</div>
+          <div class="label">Continue the Conversation</div>
+        </div>
+        <div class="section-body">
+          <div class="cta-wrap">
+            <a class="btn discord" href="https://discord.gg/WWR8DhjKH" target="_blank" rel="noopener noreferrer">Join the Brotherhood (Discord)</a>
+            <a class="btn spotify" href="https://open.spotify.com/episode/00JbqAVERzLG1orvfo9aAh?si=UDFxHRvoRP6DKfSHyd9uag&t=0&pi=nqVd9VnVS5KB8" target="_blank" rel="noopener noreferrer">Listen on Spotify</a>
+            <div class="cta-note">Stay connected. Keep building.</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
