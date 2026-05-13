@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LMTLSS Cave Night — AI Takeover</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --surface: #161616;
+    --border: rgba(255,255,255,0.08);
+    --accent: #e8441a;
+    --accent2: #f5a623;
+    --text: #f0ece4;
+    --muted: #888;
+    --dim: #555;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.8;
+    min-height: 100vh;
+  }
+
+  .grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: .025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 150px 150px;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 2.5rem 1.25rem 5rem;
+  }
+
+  /* Header */
+  .header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+  }
+
+  .eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--accent);
+    opacity: .4;
+  }
+
+  .title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 12vw, 5.5rem);
+    line-height: .95;
+    letter-spacing: .02em;
+    color: var(--text);
+    margin-bottom: .5rem;
+  }
+
+  .title span { color: var(--accent); }
+
+  .participant-badge {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    border: 1px solid rgba(245,166,35,.3);
+    padding: 3px 10px;
+    margin-top: 1rem;
+  }
+
+  /* Sections */
+  .section {
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: rise .5s ease forwards;
+  }
+
+  @keyframes rise { to { opacity: 1; transform: none; } }
+
+  .section:nth-child(1)  { animation-delay: .05s }
+  .section:nth-child(2)  { animation-delay: .1s }
+  .section:nth-child(3)  { animation-delay: .15s }
+  .section:nth-child(4)  { animation-delay: .2s }
+  .section:nth-child(5)  { animation-delay: .25s }
+  .section:nth-child(6)  { animation-delay: .3s }
+  .section:nth-child(7)  { animation-delay: .35s }
+  .section:nth-child(8)  { animation-delay: .4s }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: .75rem;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: var(--dim);
+    display: inline-block;
+  }
+
+  /* Big statement */
+  .big-statement {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.6rem, 6vw, 2.2rem);
+    line-height: 1.1;
+    color: #fff;
+    letter-spacing: .02em;
+    margin-bottom: 1.25rem;
+  }
+
+  .big-statement em {
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  /* Callout */
+  .callout {
+    margin: 1.25rem 0;
+    padding: 1.25rem 1.5rem;
+    background: var(--surface);
+    border-left: 3px solid var(--accent);
+  }
+
+  .callout p {
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.7;
+    color: #fff;
+    margin: 0;
+  }
+
+  .callout-attr {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: .1em;
+    margin-top: .6rem;
+    display: block;
+  }
+
+  /* Definition */
+  .definition {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.25rem 1.5rem;
+    margin: 1.25rem 0;
+  }
+
+  .def-term {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    color: var(--accent);
+    letter-spacing: .05em;
+    margin-bottom: .35rem;
+  }
+
+  .def-body {
+    font-size: 15px;
+    line-height: 1.75;
+    color: #ccc;
+  }
+
+  /* Failures grid */
+  .failures {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .6rem;
+    margin: 1.25rem 0;
+  }
+
+  .failure-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: .85rem 1rem;
+  }
+
+  .fail-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: rgba(232,68,26,.35);
+    line-height: 1;
+    margin-bottom: .2rem;
+  }
+
+  .fail-text { font-size: 13px; color: #ccc; line-height: 1.5; }
+
+  /* Principles */
+  .principle {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.1rem 1.25rem;
+    margin-bottom: .6rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .prin-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--accent);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 24px;
+    text-align: center;
+  }
+
+  .prin-body { flex: 1; }
+
+  .prin-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: .35rem;
+  }
+
+  .prin-body p { font-size: 14px; line-height: 1.7; color: #ccc; margin: 0; }
+  .prin-body strong { color: #fff; font-weight: 500; }
+
+  /* Scripture */
+  .scripture {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.25rem 1.5rem;
+    margin: 1.25rem 0;
+  }
+
+  .scripture-ref {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: .75rem;
+    display: block;
+  }
+
+  .scripture p {
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #ddd;
+    margin: 0;
+  }
+
+  /* Notes area */
+  .notes-block {
+    margin: 1.25rem 0;
+  }
+
+  .notes-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: .5rem;
+  }
+
+  .notes-line {
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    margin-bottom: .85rem;
+    height: 1.8rem;
+    width: 100%;
+    display: block;
+  }
+
+  /* Questions */
+  .questions { display: flex; flex-direction: column; gap: .6rem; margin: 1.25rem 0; }
+
+  .question {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent2);
+    padding: 1rem 1.25rem;
+    display: flex;
+    gap: .85rem;
+    align-items: flex-start;
+  }
+
+  .q-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--accent2);
+    font-weight: 500;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  .q-text { font-size: 14px; line-height: 1.7; color: #ccc; }
+
+  /* Divider */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  .close-cta {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--accent);
+    letter-spacing: .05em;
+    margin-top: 1.5rem;
+    display: block;
+  }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="eyebrow">LMTLSS Cave Night</div>
+    <div class="title"><span>AI</span> Take<br>over</div>
+    <div class="participant-badge">Participant guide</div>
+  </div>
+
+  <!-- Theme -->
+  <div class="section">
+    <div class="section-label">Tonight's theme</div>
+    <div class="definition">
+      <div class="def-term">AI = Actual Influence</div>
+      <div class="def-body">Before we talk about artificial intelligence out there — we need to deal with actual influence in here.</div>
+    </div>
+    <div class="big-statement">What is actually <em>influencing</em> you?</div>
+    <p style="font-size:14px;color:var(--muted)">Influence shapes your decisions, identity, relationships, beliefs, direction, and behavior — and eventually your entire life.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Core Truth -->
+  <div class="section">
+    <div class="section-label">Core truth</div>
+    <div class="callout">
+      <p>"Whatever consistently influences you… eventually begins to shape you."</p>
+    </div>
+    <div class="callout">
+      <p>"If Truth is not your primary influence — something else will take over."</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Genesis -->
+  <div class="section">
+    <div class="section-label">From Genesis — the 4 failures</div>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:1rem">It didn't happen instantly. It happened through a sequence of decisions.</p>
+    <div class="failures">
+      <div class="failure-card">
+        <div class="fail-num">1</div>
+        <div class="fail-text">Entertained unwisely</div>
+      </div>
+      <div class="failure-card">
+        <div class="fail-num">2</div>
+        <div class="fail-text">Reasoned incompletely</div>
+      </div>
+      <div class="failure-card">
+        <div class="fail-num">3</div>
+        <div class="fail-text">Navigated destructively</div>
+      </div>
+      <div class="failure-card">
+        <div class="fail-num">4</div>
+        <div class="fail-text">Lost the active influence of Truth</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 3 Principles -->
+  <div class="section">
+    <div class="section-label">3 principles of influence</div>
+
+    <div class="principle">
+      <div class="prin-num">1</div>
+      <div class="prin-body">
+        <div class="prin-title">Influence is owned by accepted truth</div>
+        <p>Whatever you accept as truth <strong>gets permission to influence you.</strong></p>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="prin-num">2</div>
+      <div class="prin-body">
+        <div class="prin-title">Accepted truth holds power</div>
+        <p>Even a lie — once accepted as truth — <strong>can begin leading you.</strong></p>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="prin-num">3</div>
+      <div class="prin-body">
+        <div class="prin-title">What's in power reveals itself</div>
+        <p>What has power in you <strong>will eventually come through you.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Scripture -->
+  <div class="section">
+    <div class="section-label">The question of the night</div>
+
+    <div class="scripture">
+      <span class="scripture-ref">Genesis 3:9–11</span>
+      <p>"But the Lord God called to the man, 'Where are you?' He answered, 'I heard you in the garden, and I was afraid because I was naked; so I hid.' And He said, 'Who told you that you were naked?'"</p>
+    </div>
+
+    <div class="callout">
+      <p>"Who told you that? You didn't get that from Me."</p>
+      <span class="callout-attr">God to Adam — and maybe to you tonight</span>
+    </div>
+
+    <p style="font-size:14px;color:var(--muted)">What voice, wound, fear, lie, algorithm, or experience has been influencing you like it was Truth?</p>
+
+    <div class="notes-block">
+      <div class="notes-label">Your answer</div>
+      <span class="notes-line"></span>
+      <span class="notes-line"></span>
+      <span class="notes-line"></span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Group Questions -->
+  <div class="section">
+    <div class="section-label">Group discussion</div>
+    <div class="questions">
+      <div class="question">
+        <div class="q-num">Q1</div>
+        <div class="q-text">What voice currently has the most influence in your life?</div>
+      </div>
+      <div class="question">
+        <div class="q-num">Q2</div>
+        <div class="q-text">What emotional wounds or fears have you accidentally treated like truth?</div>
+      </div>
+      <div class="question">
+        <div class="q-num">Q3</div>
+        <div class="q-text">Where are unhealthy influences shaping your decisions, relationships, or faith?</div>
+      </div>
+      <div class="question">
+        <div class="q-num">Q4</div>
+        <div class="q-text">What would it look like to re-anchor yourself in Truth this week?</div>
+      </div>
+    </div>
+    <span class="close-cta">Let's get honest.</span>
+  </div>
+
+</div>
+</body>
+</html>
