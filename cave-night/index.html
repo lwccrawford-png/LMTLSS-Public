@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LMTLSS | Cave Night Library</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+
   <style>
     :root{
       --gold:#F5C518;
@@ -20,7 +22,11 @@
       --radius:14px;
     }
 
-    *{box-sizing:border-box;margin:0;padding:0}
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
 
     body{
       color:var(--text);
@@ -46,8 +52,14 @@
       background:var(--gold);
       color:#111;
       font-size:13px;
+      transition:.2s ease;
     }
 
+    .nav a:hover{
+      background:#ffd84a;
+    }
+
+    /* HERO */
     .hero{
       background:linear-gradient(135deg, #121212, #0c0c0c);
       border:1px solid rgba(245,197,24,.18);
@@ -62,17 +74,20 @@
       font-size:62px;
       letter-spacing:4px;
       color:var(--gold);
+      line-height:1;
     }
 
     .title{
       font-family:'Bebas Neue';
       font-size:42px;
       margin-top:8px;
+      line-height:1;
     }
 
     .subtitle{
       margin-top:16px;
       color:#d9d9dd;
+      font-size:17px;
     }
 
     .subnote{
@@ -81,81 +96,166 @@
       color:#6f6f74;
     }
 
+    /* INTRO */
     .intro{
       margin-top:18px;
       border:1px solid var(--line);
       border-radius:14px;
       padding:16px;
+      background:var(--panel);
+      color:#d7d7d7;
+      line-height:1.6;
     }
 
+    /* SECTION */
     .section-title{
       margin:26px 2px 14px;
       font-family:'Barlow Condensed';
       letter-spacing:3px;
       color:var(--gold);
+      font-size:24px;
+      text-transform:uppercase;
     }
 
+    /* CARD */
     .card{
       background:var(--panel);
       border-left:4px solid var(--gold);
       border-radius:14px;
       margin-bottom:14px;
+      box-shadow:var(--shadow);
+      transition:.2s ease;
+    }
+
+    .card:hover{
+      transform:translateY(-2px);
     }
 
     .card-body{
-      padding:16px;
+      padding:18px;
+    }
+
+    .card-body strong{
+      font-size:18px;
+      display:block;
+      margin-bottom:10px;
     }
 
     .btn{
       display:inline-block;
-      margin-top:10px;
+      margin-top:6px;
       background:var(--gold);
       color:#111;
-      padding:10px 12px;
+      padding:10px 14px;
       border-radius:8px;
       text-decoration:none;
       font-weight:700;
+      transition:.2s ease;
     }
 
+    .btn:hover{
+      background:#ffd84a;
+    }
+
+    /* FOOTER */
     .footer-line{
-      margin-top:28px;
+      margin-top:36px;
       text-align:center;
       font-family:'Bebas Neue';
       color:var(--gold);
+      font-size:28px;
+      letter-spacing:2px;
     }
+
+    @media (max-width:640px){
+
+      .brand{
+        font-size:50px;
+      }
+
+      .title{
+        font-size:34px;
+      }
+
+      .subtitle{
+        font-size:15px;
+      }
+
+      .card-body strong{
+        font-size:16px;
+      }
+
+      .footer-line{
+        font-size:24px;
+      }
+
+    }
+
   </style>
 </head>
 
 <body>
 
-<!-- NEW NAV BUTTON -->
-<div class="nav">
-  <a href="https://www.wearelmtlss.com" target="_blank">Visit LMTLSS →</a>
-</div>
-
-<section class="hero">
-  <div class="brand">LMTLSS</div>
-  <div class="title">Cave Night Library</div>
-  <div class="subtitle">Tools & Talks for Modern Men</div>
-  <div class="subnote">All materials & resources © 2025 LMTLSS Manhood</div>
-</section>
-
-<section class="intro">
-  A growing collection of Cave Night sessions organized by date and theme.
-</section>
-
-<div class="section-title">Sessions</div>
-
-<div class="card">
-  <div class="card-body">
-    <strong>April 2026 — Flex On Them (Power)</strong><br>
-    <a class="btn" href="./2026-04-power/">Enter Session →</a>
+  <!-- NAV -->
+  <div class="nav">
+    <a href="https://www.wearelmtlss.com" target="_blank">
+      Visit LMTLSS →
+    </a>
   </div>
-</div>
 
-<div class="footer-line">
-  MEN AREN’T BORN. THEY’RE BUILT.
-</div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="brand">LMTLSS</div>
+
+    <div class="title">
+      Cave Night Library
+    </div>
+
+    <div class="subtitle">
+      Tools & Talks for Modern Men
+    </div>
+
+    <div class="subnote">
+      All materials & resources © 2025 LMTLSS Manhood
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="intro">
+    A growing collection of Cave Night sessions organized by date and theme.
+  </section>
+
+  <!-- SESSIONS -->
+  <div class="section-title">
+    Sessions
+  </div>
+
+  <!-- APRIL SESSION -->
+  <div class="card">
+    <div class="card-body">
+      <strong>April 2026 — Flex On Them (Power)</strong>
+
+      <a class="btn" href="./2026-04-power/">
+        Enter Session →
+      </a>
+    </div>
+  </div>
+
+  <!-- MAY SESSION -->
+  <div class="card">
+    <div class="card-body">
+      <strong>May 2026 — AI / Altered Intelligence</strong>
+
+      <a class="btn" href="./2026-05-ai/">
+        Enter Session →
+      </a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-line">
+    MEN AREN’T BORN. THEY’RE BUILT.
+  </div>
 
 </body>
 </html>
