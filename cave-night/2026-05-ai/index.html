@@ -1,491 +1,525 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LMTLSS Cave Night — AI Takeover</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0d0d0d;
-    --surface: #161616;
-    --border: rgba(255,255,255,0.08);
-    --accent: #e8441a;
-    --accent2: #f5a623;
-    --text: #f0ece4;
-    --muted: #888;
-    --dim: #555;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LMTLSS — AI Takeover (Participant)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #F5C518;
+      --black: #0a0a0a;
+      --dark: #111111;
+      --mid: #1a1a1a;
+      --light-mid: #222222;
+      --text: #e8e8e8;
+      --muted: #888888;
+      --red: #e74c3c;
+      --green: #2ecc71;
+    }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { background-color: var(--black); }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'IBM Plex Serif', Georgia, serif;
-    font-size: 16px;
-    line-height: 1.8;
-    min-height: 100vh;
-  }
+    body {
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 0 40px 0;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
 
-  .grain {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    opacity: .025;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 150px 150px;
-  }
+    .nav { display: flex; gap: 10px; padding: 14px 16px 0; }
 
-  .page {
-    position: relative;
-    z-index: 1;
-    max-width: 560px;
-    margin: 0 auto;
-    padding: 2.5rem 1.25rem 5rem;
-  }
+    .nav a {
+      flex: 1;
+      text-align: center;
+      padding: 12px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1.2;
+    }
 
-  /* Header */
-  .header {
-    margin-bottom: 3rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid var(--border);
-  }
+    .nav-back { background: #222; color: #fff; border: 1px solid #333; }
+    .nav-main { background: var(--gold); color: #111; border: 1px solid rgba(0,0,0,0.15); }
 
-  .eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: .2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: .75rem;
-  }
+    .header {
+      background: var(--dark);
+      border-bottom: 3px solid var(--gold);
+      padding: 28px 24px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin-top: 14px;
+    }
 
-  .eyebrow::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--accent);
-    opacity: .4;
-  }
+    .header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg, transparent, transparent 8px,
+        rgba(245,197,24,0.03) 8px, rgba(245,197,24,0.03) 9px
+      );
+      pointer-events: none;
+    }
 
-  .title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3rem, 12vw, 5.5rem);
-    line-height: .95;
-    letter-spacing: .02em;
-    color: var(--text);
-    margin-bottom: .5rem;
-  }
+    .logo-wrap {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 180px;
+      height: 64px;
+      margin: 0 auto;
+      border: 1px solid rgba(245,197,24,0.18);
+      background: rgba(255,255,255,0.02);
+      border-radius: 4px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 4px;
+      color: white;
+    }
 
-  .title span { color: var(--accent); }
+    .participant-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 3px;
+      margin-top: 10px;
+      position: relative;
+      z-index: 1;
+    }
 
-  .participant-badge {
-    display: inline-block;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: .15em;
-    text-transform: uppercase;
-    color: var(--accent2);
-    border: 1px solid rgba(245,166,35,.3);
-    padding: 3px 10px;
-    margin-top: 1rem;
-  }
+    .talk-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--gold);
+      margin-top: 10px;
+      position: relative;
+      z-index: 1;
+      text-transform: uppercase;
+    }
 
-  /* Sections */
-  .section {
-    margin-bottom: 2.5rem;
-    opacity: 0;
-    transform: translateY(14px);
-    animation: rise .5s ease forwards;
-  }
+    .talk-subtitle {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      letter-spacing: 2px;
+      color: white;
+      line-height: 1;
+      margin-top: 4px;
+      position: relative;
+      z-index: 1;
+      text-transform: uppercase;
+    }
 
-  @keyframes rise { to { opacity: 1; transform: none; } }
+    .section {
+      margin: 20px 16px 0;
+      background: var(--mid);
+      border-radius: 4px;
+      overflow: hidden;
+      border-left: 3px solid var(--gold);
+      animation: fadeUp 0.5s ease both;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.03) inset;
+    }
 
-  .section:nth-child(1)  { animation-delay: .05s }
-  .section:nth-child(2)  { animation-delay: .1s }
-  .section:nth-child(3)  { animation-delay: .15s }
-  .section:nth-child(4)  { animation-delay: .2s }
-  .section:nth-child(5)  { animation-delay: .25s }
-  .section:nth-child(6)  { animation-delay: .3s }
-  .section:nth-child(7)  { animation-delay: .35s }
-  .section:nth-child(8)  { animation-delay: .4s }
+    .section:nth-of-type(1) { animation-delay: 0.05s; }
+    .section:nth-of-type(2) { animation-delay: 0.10s; }
+    .section:nth-of-type(3) { animation-delay: 0.15s; }
+    .section:nth-of-type(4) { animation-delay: 0.20s; }
+    .section:nth-of-type(5) { animation-delay: 0.25s; }
+    .section:nth-of-type(6) { animation-delay: 0.30s; }
+    .section:nth-of-type(7) { animation-delay: 0.35s; }
+    .section:nth-of-type(8) { animation-delay: 0.40s; }
 
-  .section-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px;
-    letter-spacing: .2em;
-    text-transform: uppercase;
-    color: var(--dim);
-    margin-bottom: .75rem;
-    display: flex;
-    align-items: center;
-    gap: .6rem;
-  }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-  .section-label::before {
-    content: '';
-    width: 20px;
-    height: 1px;
-    background: var(--dim);
-    display: inline-block;
-  }
+    .section-header {
+      background: var(--light-mid);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
 
-  /* Big statement */
-  .big-statement {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(1.6rem, 6vw, 2.2rem);
-    line-height: 1.1;
-    color: #fff;
-    letter-spacing: .02em;
-    margin-bottom: 1.25rem;
-  }
+    .section-icon { font-size: 16px; flex-shrink: 0; }
 
-  .big-statement em {
-    color: var(--accent);
-    font-style: normal;
-  }
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
 
-  /* Callout */
-  .callout {
-    margin: 1.25rem 0;
-    padding: 1.25rem 1.5rem;
-    background: var(--surface);
-    border-left: 3px solid var(--accent);
-  }
+    .section-body { padding: 16px; }
 
-  .callout p {
-    font-style: italic;
-    font-size: 17px;
-    line-height: 1.7;
-    color: #fff;
-    margin: 0;
-  }
+    .big-quote {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      line-height: 1.2;
+      color: white;
+      letter-spacing: 1px;
+    }
+    .big-quote span { color: var(--gold); }
 
-  .callout-attr {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: .1em;
-    margin-top: .6rem;
-    display: block;
-  }
+    .definition {
+      background: var(--light-mid);
+      border-radius: 3px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
 
-  /* Definition */
-  .definition {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 1.25rem 1.5rem;
-    margin: 1.25rem 0;
-  }
+    .def-term {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-bottom: 4px;
+    }
 
-  .def-term {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.5rem;
-    color: var(--accent);
-    letter-spacing: .05em;
-    margin-bottom: .35rem;
-  }
+    .def-text { font-size: 14px; line-height: 1.5; font-style: italic; color: #cccccc; }
 
-  .def-body {
-    font-size: 15px;
-    line-height: 1.75;
-    color: #ccc;
-  }
+    .failures-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
 
-  /* Failures grid */
-  .failures {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: .6rem;
-    margin: 1.25rem 0;
-  }
+    .fail-card { background: var(--light-mid); border-radius: 3px; padding: 12px 10px; }
 
-  .failure-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: .85rem 1rem;
-  }
+    .fail-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      color: rgba(245,197,24,0.25);
+      line-height: 1;
+      margin-bottom: 2px;
+    }
 
-  .fail-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.8rem;
-    color: rgba(232,68,26,.35);
-    line-height: 1;
-    margin-bottom: .2rem;
-  }
+    .fail-text { font-size: 13px; color: var(--text); line-height: 1.4; }
 
-  .fail-text { font-size: 13px; color: #ccc; line-height: 1.5; }
+    .principle {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: var(--light-mid);
+      border-radius: 3px;
+      padding: 12px;
+      margin-bottom: 8px;
+    }
 
-  /* Principles */
-  .principle {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 1.1rem 1.25rem;
-    margin-bottom: .6rem;
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-  }
+    .prin-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      color: var(--gold);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 22px;
+      text-align: center;
+    }
 
-  .prin-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    color: var(--accent);
-    line-height: 1;
-    flex-shrink: 0;
-    width: 24px;
-    text-align: center;
-  }
+    .prin-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
 
-  .prin-body { flex: 1; }
+    .prin-body { font-size: 13px; line-height: 1.55; color: var(--text); }
+    .prin-body strong { color: white; }
 
-  .prin-title {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: .35rem;
-  }
+    .scripture {
+      background: var(--light-mid);
+      border-radius: 3px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
 
-  .prin-body p { font-size: 14px; line-height: 1.7; color: #ccc; margin: 0; }
-  .prin-body strong { color: #fff; font-weight: 500; }
+    .scripture-ref {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+      display: block;
+    }
 
-  /* Scripture */
-  .scripture {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 1.25rem 1.5rem;
-    margin: 1.25rem 0;
-  }
+    .scripture-text { font-size: 14px; font-style: italic; line-height: 1.6; color: #cccccc; }
 
-  .scripture-ref {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    letter-spacing: .15em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: .75rem;
-    display: block;
-  }
+    .points { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 
-  .scripture p {
-    font-style: italic;
-    font-size: 15px;
-    line-height: 1.8;
-    color: #ddd;
-    margin: 0;
-  }
+    .points li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 15px;
+      line-height: 1.45;
+      color: var(--text);
+    }
 
-  /* Notes area */
-  .notes-block {
-    margin: 1.25rem 0;
-  }
+    .bullet { color: var(--gold); font-weight: 700; font-size: 18px; line-height: 1.2; flex-shrink: 0; }
 
-  .notes-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px;
-    letter-spacing: .2em;
-    text-transform: uppercase;
-    color: var(--dim);
-    margin-bottom: .5rem;
-  }
+    .notes-block { margin-top: 14px; }
 
-  .notes-line {
-    border: none;
-    border-bottom: 1px solid rgba(255,255,255,0.07);
-    margin-bottom: .85rem;
-    height: 1.8rem;
-    width: 100%;
-    display: block;
-  }
+    .notes-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
 
-  /* Questions */
-  .questions { display: flex; flex-direction: column; gap: .6rem; margin: 1.25rem 0; }
+    .notes-line {
+      display: block;
+      border: none;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 14px;
+      height: 1.6rem;
+      width: 100%;
+    }
 
-  .question {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--accent2);
-    padding: 1rem 1.25rem;
-    display: flex;
-    gap: .85rem;
-    align-items: flex-start;
-  }
+    .footer {
+      margin: 28px 16px 0;
+      text-align: center;
+      padding: 16px;
+      background: var(--mid);
+      border-radius: 4px;
+      border: 1px solid rgba(245,197,24,0.2);
+    }
 
-  .q-num {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    color: var(--accent2);
-    font-weight: 500;
-    flex-shrink: 0;
-    padding-top: 2px;
-  }
+    .footer-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
 
-  .q-text { font-size: 14px; line-height: 1.7; color: #ccc; }
+    .footer-tagline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-top: 4px;
+    }
 
-  /* Divider */
-  .divider { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+    .cta-wrap { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
 
-  .close-cta {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    color: var(--accent);
-    letter-spacing: .05em;
-    margin-top: 1.5rem;
-    display: block;
-  }
-</style>
+    .btn-spotify {
+      display: block;
+      padding: 13px 18px;
+      background: #1DB954;
+      color: #000;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border-radius: 4px;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .btn-checkin {
+      display: block;
+      padding: 13px 18px;
+      background: var(--gold);
+      color: #111;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border-radius: 4px;
+      text-decoration: none;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-<div class="grain"></div>
-<div class="page">
 
-  <!-- Header -->
+  <!-- TOP NAV -->
+  <div class="nav">
+    <a href="../" class="nav-back">← Back to Library</a>
+    <a href="https://www.wearelmtlss.com" target="_blank" rel="noopener noreferrer" class="nav-main">Visit LMTLSS</a>
+  </div>
+
+  <!-- HEADER -->
   <div class="header">
-    <div class="eyebrow">LMTLSS Cave Night</div>
-    <div class="title"><span>AI</span> Take<br>over</div>
-    <div class="participant-badge">Participant guide</div>
+    <div class="logo-wrap">LMTLSS</div>
+    <div class="participant-badge">Participant Guide</div>
+    <div class="talk-title">Cave Night &nbsp;·&nbsp; This Month's Talk</div>
+    <div class="talk-subtitle">AI Takeover</div>
   </div>
 
-  <!-- Theme -->
+  <!-- THEME -->
   <div class="section">
-    <div class="section-label">Tonight's theme</div>
-    <div class="definition">
-      <div class="def-term">AI = Actual Influence</div>
-      <div class="def-body">Before we talk about artificial intelligence out there — we need to deal with actual influence in here.</div>
+    <div class="section-header">
+      <span class="section-icon">🎯</span>
+      <span class="section-label">Tonight's Theme</span>
     </div>
-    <div class="big-statement">What is actually <em>influencing</em> you?</div>
-    <p style="font-size:14px;color:var(--muted)">Influence shapes your decisions, identity, relationships, beliefs, direction, and behavior — and eventually your entire life.</p>
+    <div class="section-body">
+      <div class="definition">
+        <div class="def-term">AI = Actual Influence</div>
+        <div class="def-text">Before we talk about artificial intelligence out there — we need to deal with actual influence in here.</div>
+      </div>
+      <div class="big-quote">"What is actually <span>influencing</span> you?"</div>
+      <div style="margin-top:12px;font-size:14px;color:var(--muted);line-height:1.6;">Influence shapes your decisions, identity, relationships, beliefs, direction, and behavior — and eventually your entire life.</div>
+    </div>
   </div>
 
-  <hr class="divider">
-
-  <!-- Core Truth -->
+  <!-- CORE TRUTH -->
   <div class="section">
-    <div class="section-label">Core truth</div>
-    <div class="callout">
-      <p>"Whatever consistently influences you… eventually begins to shape you."</p>
+    <div class="section-header">
+      <span class="section-icon">✍️</span>
+      <span class="section-label">Lock This In</span>
     </div>
-    <div class="callout">
-      <p>"If Truth is not your primary influence — something else will take over."</p>
+    <div class="section-body">
+      <div class="big-quote">"Whatever consistently <span>influences</span> you… eventually begins to <span>shape</span> you."</div>
+      <div style="margin-top:12px;padding:12px;background:rgba(245,197,24,0.07);border-radius:3px;border-left:3px solid var(--gold);">
+        <div style="font-size:14px;line-height:1.55;">If Truth is not your primary influence — <strong style="color:white;">something else will take over.</strong></div>
+      </div>
     </div>
   </div>
 
-  <hr class="divider">
-
-  <!-- Genesis -->
+  <!-- 4 FAILURES -->
   <div class="section">
-    <div class="section-label">From Genesis — the 4 failures</div>
-    <p style="font-size:14px;color:var(--muted);margin-bottom:1rem">It didn't happen instantly. It happened through a sequence of decisions.</p>
-    <div class="failures">
-      <div class="failure-card">
-        <div class="fail-num">1</div>
-        <div class="fail-text">Entertained unwisely</div>
-      </div>
-      <div class="failure-card">
-        <div class="fail-num">2</div>
-        <div class="fail-text">Reasoned incompletely</div>
-      </div>
-      <div class="failure-card">
-        <div class="fail-num">3</div>
-        <div class="fail-text">Navigated destructively</div>
-      </div>
-      <div class="failure-card">
-        <div class="fail-num">4</div>
-        <div class="fail-text">Lost the active influence of Truth</div>
+    <div class="section-header">
+      <span class="section-icon">⚠️</span>
+      <span class="section-label">From Genesis — The 4 Failures</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size:14px;color:var(--muted);margin-bottom:12px;">It didn't happen instantly. It happened through a sequence of decisions.</p>
+      <div class="failures-grid">
+        <div class="fail-card"><div class="fail-num">1</div><div class="fail-text">Entertained unwisely</div></div>
+        <div class="fail-card"><div class="fail-num">2</div><div class="fail-text">Reasoned incompletely</div></div>
+        <div class="fail-card"><div class="fail-num">3</div><div class="fail-text">Navigated destructively</div></div>
+        <div class="fail-card"><div class="fail-num">4</div><div class="fail-text">Lost the active influence of Truth</div></div>
       </div>
     </div>
   </div>
 
-  <hr class="divider">
-
-  <!-- 3 Principles -->
+  <!-- 3 PRINCIPLES -->
   <div class="section">
-    <div class="section-label">3 principles of influence</div>
-
-    <div class="principle">
-      <div class="prin-num">1</div>
-      <div class="prin-body">
-        <div class="prin-title">Influence is owned by accepted truth</div>
-        <p>Whatever you accept as truth <strong>gets permission to influence you.</strong></p>
-      </div>
+    <div class="section-header">
+      <span class="section-icon">🔑</span>
+      <span class="section-label">3 Principles of Influence</span>
     </div>
-
-    <div class="principle">
-      <div class="prin-num">2</div>
-      <div class="prin-body">
-        <div class="prin-title">Accepted truth holds power</div>
-        <p>Even a lie — once accepted as truth — <strong>can begin leading you.</strong></p>
+    <div class="section-body">
+      <div class="principle">
+        <div class="prin-num">1</div>
+        <div>
+          <div class="prin-title">Influence is owned by accepted truth</div>
+          <div class="prin-body">Whatever you accept as truth <strong>gets permission to influence you.</strong></div>
+        </div>
       </div>
-    </div>
-
-    <div class="principle">
-      <div class="prin-num">3</div>
-      <div class="prin-body">
-        <div class="prin-title">What's in power reveals itself</div>
-        <p>What has power in you <strong>will eventually come through you.</strong></p>
+      <div class="principle">
+        <div class="prin-num">2</div>
+        <div>
+          <div class="prin-title">Accepted truth holds power</div>
+          <div class="prin-body">Even a lie — once accepted as truth — <strong>can begin leading you.</strong></div>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="prin-num">3</div>
+        <div>
+          <div class="prin-title">What's in power reveals itself</div>
+          <div class="prin-body">What has power in you <strong>will eventually come through you.</strong></div>
+        </div>
       </div>
     </div>
   </div>
 
-  <hr class="divider">
-
-  <!-- Scripture -->
+  <!-- SCRIPTURE -->
   <div class="section">
-    <div class="section-label">The question of the night</div>
-
-    <div class="scripture">
-      <span class="scripture-ref">Genesis 3:9–11</span>
-      <p>"But the Lord God called to the man, 'Where are you?' He answered, 'I heard you in the garden, and I was afraid because I was naked; so I hid.' And He said, 'Who told you that you were naked?'"</p>
+    <div class="section-header">
+      <span class="section-icon">📖</span>
+      <span class="section-label">The Question of the Night</span>
     </div>
-
-    <div class="callout">
-      <p>"Who told you that? You didn't get that from Me."</p>
-      <span class="callout-attr">God to Adam — and maybe to you tonight</span>
-    </div>
-
-    <p style="font-size:14px;color:var(--muted)">What voice, wound, fear, lie, algorithm, or experience has been influencing you like it was Truth?</p>
-
-    <div class="notes-block">
-      <div class="notes-label">Your answer</div>
-      <span class="notes-line"></span>
-      <span class="notes-line"></span>
-      <span class="notes-line"></span>
+    <div class="section-body">
+      <div class="scripture">
+        <span class="scripture-ref">Genesis 3:9–11</span>
+        <div class="scripture-text">"But the Lord God called to the man, 'Where are you?' He answered, 'I heard you in the garden, and I was afraid because I was naked; so I hid.' And He said, 'Who told you that you were naked?'"</div>
+      </div>
+      <div style="padding:14px;background:rgba(245,197,24,0.07);border-radius:3px;border-left:3px solid var(--gold);margin-bottom:14px;">
+        <div class="big-quote" style="font-size:20px;">"<span>Who told you</span> that?"</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:6px;font-style:italic;">"You didn't get that from Me."</div>
+      </div>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:10px;">What voice, wound, fear, lie, algorithm, or experience has been influencing you like it was Truth?</p>
+      <div class="notes-block">
+        <div class="notes-label">Your answer</div>
+        <span class="notes-line"></span>
+        <span class="notes-line"></span>
+        <span class="notes-line"></span>
+      </div>
     </div>
   </div>
 
-  <hr class="divider">
-
-  <!-- Group Questions -->
+  <!-- GROUP QUESTIONS -->
   <div class="section">
-    <div class="section-label">Group discussion</div>
-    <div class="questions">
-      <div class="question">
-        <div class="q-num">Q1</div>
-        <div class="q-text">What voice currently has the most influence in your life?</div>
-      </div>
-      <div class="question">
-        <div class="q-num">Q2</div>
-        <div class="q-text">What emotional wounds or fears have you accidentally treated like truth?</div>
-      </div>
-      <div class="question">
-        <div class="q-num">Q3</div>
-        <div class="q-text">Where are unhealthy influences shaping your decisions, relationships, or faith?</div>
-      </div>
-      <div class="question">
-        <div class="q-num">Q4</div>
-        <div class="q-text">What would it look like to re-anchor yourself in Truth this week?</div>
-      </div>
+    <div class="section-header">
+      <span class="section-icon">💬</span>
+      <span class="section-label">Discussion — Your Actual Influence</span>
     </div>
-    <span class="close-cta">Let's get honest.</span>
+    <div class="section-body">
+      <ul class="points">
+        <li><span class="bullet">1</span><span>What voice currently has the most influence in your life?</span></li>
+        <li><span class="bullet">2</span><span>What emotional wounds or fears have you accidentally treated like truth?</span></li>
+        <li><span class="bullet">3</span><span>Where are unhealthy influences shaping your decisions, relationships, or faith?</span></li>
+        <li><span class="bullet">4</span><span>What would it look like to re-anchor yourself in Truth this week?</span></li>
+      </ul>
+    </div>
   </div>
 
-</div>
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-text">LMTLSS Cave Night</div>
+    <div class="footer-tagline">Men Aren't Born. They're Built.</div>
+  </div>
+
+  <!-- CTA BUTTONS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🔥</span>
+      <span class="section-label">Continue the Conversation</span>
+    </div>
+    <div class="section-body">
+      <div class="cta-wrap">
+        <a href="https://open.spotify.com/episode/00JbqAVERzLG1orvfo9aAh?si=UDFxHRvoRP6DKfSHyd9uag" target="_blank" rel="noopener noreferrer" class="btn-spotify">🎧 Listen on Spotify</a>
+        <a href="https://42b4wd.share-na2.hsforms.com/2N8tBWlh0TESJHHRsLSquYw" target="_blank" rel="noopener noreferrer" class="btn-checkin">✅ Check In</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="nav" style="margin-top:20px;">
+    <a href="../" class="nav-back">← Back to Library</a>
+    <a href="https://www.wearelmtlss.com" target="_blank" rel="noopener noreferrer" class="nav-main">Visit LMTLSS</a>
+  </div>
+
 </body>
 </html>
